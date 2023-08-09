@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Orders</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'zomato_app/styles.css' %}">
+</head>
+<body>
+    <style>
+               
+        .content {
+            margin: 20px;
+        }
+        
+        .order-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .order-item {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .order-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .order-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .order-status {
+            color: #888;
+        }
+        
+        .customer-name {
+            font-weight: bold;
+        }
+        
+        .dishes-list {
+            list-style: none;
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .dish-item {
+            margin: 5px 0;
+        }
+        
+        .update-form {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .status-select {
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        
+        .update-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .update-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="{% static 'zomato_app/logo.png' %}" alt="Logo">
+        </div>
+        <div class="navbar-tabs">
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'add_dish' %}">Add Dish</a>
+            <a href="{% url 'take_order' %}">Take Order</a>
+            <a href="{% url 'review_orders' %}">Review Orders</a>
+            <!--  <a href="{% url 'exit_system' %}">Exit</a> -->
+        </div>
+    </div>
+    <div class="content">
+        <h1>Review Orders</h1>
+        <ul class="order-list">
+            {% for order_id, order in orders.items %}
+            <li class="order-item">
+                <div class="order-details">
+                    <div class="order-info">
+                        <span class="order-id">Order ID: {{ order_id }}</span>
+                        <span class="order-status">Status: {{ order.status|default:"Received" }}</span>
+                    </div>
+                    <div class="customer-name">Customer Name: {{ order.customer_name }}</div>
+                </div>
+                <ul class="dishes-list">
+                    {% for dish in order.dishes %}
+                    <li class="dish-item">{{ dish.name }} - Price: {{ dish.price }}</li>
+                    {% endfor %}
+                </ul>
+                <form class="update-form" method="post" action="{% url 'update_order_status' order_id %}">
+                    {% csrf_token %}
+                    <label for="new_status">Update Status:</label>
+                    <select class="status-select" name="new_status">
+                        <option value="received">Received</option>
+                        <option value="preparing">Preparing</option>
+                        <option value="ready">Ready</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                    <button class="update-button" type="submit">Update</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

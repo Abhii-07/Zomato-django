@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Take Order</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'zomato_app/styles.css' %}">
+    <style>
+        /* ... Previous styles ... */
+
+        .form-container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .menu-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .menu-card {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: auto;
+            text-align: center;
+        }
+
+        .menu-card h2 {
+            margin-bottom: 10px;
+        }
+
+        .menu-card p {
+            margin-bottom: 5px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-remove {
+            background-color: #ff5b5b;
+            color: white;
+        }
+
+        .btn-toggle {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .form-container button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="{% static 'zomato_app/logo.png' %}" alt="Logo">
+        </div>
+        <div class="navbar-tabs">
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'add_dish' %}">Add Dish</a>
+            <a href="{% url 'take_order' %}">Take Order</a>
+            <a href="{% url 'review_orders' %}">Review Orders</a>
+            <!--  <a href="{% url 'exit_system' %}">Exit</a> -->
+        </div>
+    </div>
+    <h1>Take Order</h1>
+    {% if error_message %}
+    <p class="error">{{ error_message }}</p>
+    {% endif %}
+    <form method="post" class="form-container">
+        {% csrf_token %}
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" required><br>
+        <div class="menu-carousel">
+            {% for id, dish in menu.items %}
+            <div class="menu-card">
+                <h2>{{ dish.name }}</h2>
+                <p>Price: ₹{{ dish.price }}</p>
+                <label>
+                    <input type="checkbox" name="selected_dishes" value="{{ id }}">
+                    Select
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <button id="submit-btn" type="submit">Place Order</button>
+    </form>
+</body>
+
+</html>

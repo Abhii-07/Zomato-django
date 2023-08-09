@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 20px 20px;
+}
+
+/* Logo */
+.navbar-logo img {
+    max-height: 40px;
+}
+
+/* Navigation tabs */
+.navbar-tabs a {
+    margin: 0 10px;
+    padding: 8px 16px;
+    /* Add padding to make it look like a button */
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    /* Add transition for color change */
+}
+
+.navbar-tabs a:hover {
+    background-color: red;
+    /* Change background color on hover */
+    color: black;
+    /* Change text color on hover */
+}
+
+
+.exit-btn {
+    background-color: #ff5b5b;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.menu-card {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: auto;
+    text-align: center;
+}
+
+.menu-card h2 {
+    margin-bottom: 10px;
+}
+
+.menu-card p {
+    margin-bottom: 5px;
+}
+
+.menu-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-remove {
+    background-color: #ff5b5b;
+    color: white;
+}
+
+.btn-toggle {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #333;
+    color: white;
+}
+
+
+/* ... Previous styles ... */
+
+.form-container {
+    width: 30%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.checkbox-label {
+    margin-left: 10px;
+}
+
+.form-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.form-button:hover {
+    background-color: #45a049;
+}
+

@@ -1,0 +1,27 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Availability</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'zomato_app/styles.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="{% static 'zomato_app/logo.png' %}" alt="Logo">
+        </div>
+        <div class="navbar-tabs">
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'add_dish' %}">Add Dish</a>
+            <a href="{% url 'take_order' %}">Take Order</a>
+            <a href="{% url 'review_orders' %}">Review Orders</a>
+            <!--  <a href="{% url 'exit_system' %}">Exit</a> -->
+        </div>
+    </div>
+    <h1>Update Availability</h1>
+    <p>Availability for dish "{{ dish.name }}" has been updated.</p>
+    <a href="{% url 'menu' %}">Back to Menu</a>
+</body>
+</html>

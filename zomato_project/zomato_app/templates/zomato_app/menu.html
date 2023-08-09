@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'zomato_app/styles.css' %}">
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="{% static 'zomato_app/logo.png' %}" alt="Logo">
+        </div>
+        <div class="navbar-tabs">
+            <a href="{% url 'menu' %}">Menu</a>
+            <a href="{% url 'add_dish' %}">Add Dish</a>
+            <a href="{% url 'take_order' %}">Take Order</a>
+            <a href="{% url 'review_orders' %}">Review Orders</a>
+        </div>
+    </div>
+    <h1>Menu</h1>
+    
+    <div class="menu-items">
+        {% for dish_id, dish in menu.items %}
+        <div class="menu-card">
+            <h2>{{ dish.name }}</h2>
+            <p>Price: ₹{{ dish.price }}</p>
+            <p>{% if dish.availability %}<span class="available">Available</span>{% else %}<span class="unavailable">Unavailable</span>{% endif %}</p>
+            <div class="menu-buttons">
+                <a href="{% url 'remove_dish' dish_id %}" class="btn btn-remove">Remove</a>
+                <a href="{% url 'update_availability' dish_id %}" class="btn btn-toggle">Toggle Availability</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
