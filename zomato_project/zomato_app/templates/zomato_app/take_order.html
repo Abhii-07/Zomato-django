@@ -90,6 +90,68 @@
         .form-container button:hover {
             background-color: #45a049;
         }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 10px;
+            list-style: none; /* Remove list markers */
+            padding-left: 0; /* Remove default padding */
+        }
+
+        .menu-card {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: calc(22.22% - 20px);
+            text-align: center;
+        }
+
+
+        /* New styles for the order summary */
+        .order-summary {
+            width: 80%;
+            margin: auto;
+            margin-bottom: 10px;
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+        }
+
+        .order-heading {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .selected-dishes {
+            margin-bottom: 10px;
+        }
+
+        .dish {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+        }
+
+        .dish-name {
+            flex: 1;
+        }
+
+        .dish-price {
+            margin-left: 20px;
+        }
+
+        .total-amount {
+            font-size: 18px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -107,6 +169,11 @@
         </div>
     </div>
     <h1>Take Order</h1>
+    <div class="order-summary">
+        <h2>Order Summary</h2>
+        <ul id="selected-dishes-list"></ul>
+        <p>Total Amount: ₹<span id="total-amount">0.00</span></p>
+    </div>
     {% if error_message %}
     <p class="error">{{ error_message }}</p>
     {% endif %}
@@ -114,20 +181,56 @@
         {% csrf_token %}
         <label for="customer_name">Customer Name:</label>
         <input type="text" name="customer_name" required><br>
-        <div class="menu-carousel">
-            {% for id, dish in menu.items %}
-            <div class="menu-card">
+        <ul class="menu-container">
+            {% for dish in menu %}
+            <li class="menu-card">
                 <h2>{{ dish.name }}</h2>
                 <p>Price: ₹{{ dish.price }}</p>
                 <label>
-                    <input type="checkbox" name="selected_dishes" value="{{ id }}">
+                    <input type="checkbox" name="selected_dishes" value="{{ dish.id }}">
                     Select
                 </label>
-            </div>
+                <button class="add-btn" type="button" data-dish-id="{{ dish.id }}">Add</button>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
         <button id="submit-btn" type="submit">Place Order</button>
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const addButtons = document.querySelectorAll('.add-btn');
+            const selectedDishesList = document.getElementById('selected-dishes-list');
+            const totalAmountSpan = document.getElementById('total-amount');
+            const selectedDishes = [];
+    
+            addButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const dishId = button.getAttribute('data-dish-id');
+                    const checkbox = document.querySelector(`input[name="selected_dishes"][value="${dishId}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                        const dishName = checkbox.parentElement.previousElementSibling.previousElementSibling.textContent;
+                        const dishPrice = parseFloat(checkbox.parentElement.previousElementSibling.textContent.split('₹')[1]);
+                        selectedDishes.push({ id: dishId, name: dishName, price: dishPrice });
+                        updateOrderSummary();
+                    }
+                });
+            });
+    
+            function updateOrderSummary() {
+                selectedDishesList.innerHTML = '';
+                let totalAmount = 0;
+                selectedDishes.forEach(dish => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${dish.name} - ₹${dish.price}`;
+                    selectedDishesList.appendChild(listItem);
+                    totalAmount += dish.price;
+                });
+                totalAmountSpan.textContent = totalAmount.toFixed(2);
+            }
+        });
+    </script>
 </body>
 
 </html>

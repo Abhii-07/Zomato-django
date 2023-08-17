@@ -11,4 +11,5 @@ urlpatterns = [
     path('update_order_status/<int:order_id>/', views.update_order_status, name='update_order_status'),
     path('review_orders/', views.review_orders, name='review_orders'),
     path('exit/', views.exit_system, name='exit_system'),
+    path('chatbot/', views.chatbot_view, name='chatbot'),
 ]

@@ -22,14 +22,14 @@
     <h1>Menu</h1>
     
     <div class="menu-items">
-        {% for dish_id, dish in menu.items %}
+        {% for dish in menu %}
         <div class="menu-card">
             <h2>{{ dish.name }}</h2>
             <p>Price: ₹{{ dish.price }}</p>
             <p>{% if dish.availability %}<span class="available">Available</span>{% else %}<span class="unavailable">Unavailable</span>{% endif %}</p>
             <div class="menu-buttons">
-                <a href="{% url 'remove_dish' dish_id %}" class="btn btn-remove">Remove</a>
-                <a href="{% url 'update_availability' dish_id %}" class="btn btn-toggle">Toggle Availability</a>
+                <a href="{% url 'remove_dish' dish.id %}" class="btn btn-remove">Remove</a>
+                <a href="{% url 'update_availability' dish.id %}" class="btn btn-toggle">Toggle Availability</a>
             </div>
         </div>
         {% endfor %}
